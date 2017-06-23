@@ -1,8 +1,16 @@
 defmodule VigenereTest do
   use ExUnit.Case
-  doctest Vigenere
+  import Vigenere
 
-  test "the truth" do
-    assert 1 + 1 == 2
+  test "rotate" do
+    assert rotate(alphabet()) == 'bcdefghijklmnopqrstuvwxyza'
+  end
+
+  test "enciphering" do
+    assert encipher('lemon','attackatdawn') == 'lxfopvefrnhr'
+  end
+
+  test "deciphering" do
+    assert decipher('lemon','lxfopvefrnhr') == 'attackatdawn'
   end
 end
