@@ -4,7 +4,7 @@ defmodule Vigenere do
   Documentation for Vigenere.
   """
 
-  def alphabet, do: 'abcdefghijklmnopqrstuvwxyz'
+  def alphabet, do: String.graphemes("abcdefghijklmnopqrstuvwxyz")
 
   def rotate([x|xs]) do
     reverse([x|reverse(xs)])
@@ -23,7 +23,10 @@ defmodule Vigenere do
   end
 
   def strip(text) do
-    filter(text,&(MapSet.member?(MapSet.new(alphabet()),&1)))
+    text |>
+    String.graphemes |>
+    filter(&(MapSet.member?(MapSet.new(alphabet()),&1))) |>
+    Enum.join
   end
 
   def encipher(key,plain_text) do
@@ -31,8 +34,8 @@ defmodule Vigenere do
   end
 
   def process(key,text,cipher_map) do
-    map(zip(Stream.cycle(key),text),
-             fn({k,t}) -> Map.fetch!(Map.fetch!(cipher_map,k),t) end)
+    join(map(zip(Stream.cycle(String.graphemes(key)),String.graphemes(text)),
+             fn({k,t}) -> Map.fetch!(Map.fetch!(cipher_map,k),t) end))
   end
 
   def decipher(key,cipher_text) do

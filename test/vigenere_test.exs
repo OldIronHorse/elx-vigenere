@@ -3,18 +3,18 @@ defmodule VigenereTest do
   import Vigenere
 
   test "rotate" do
-    assert rotate(alphabet()) == 'bcdefghijklmnopqrstuvwxyza'
+    assert rotate(alphabet()) == String.graphemes("bcdefghijklmnopqrstuvwxyza")
   end
 
   test "enciphering" do
-    assert encipher('lemon','attackatdawn') == 'lxfopvefrnhr'
+    assert encipher("lemon","attackatdawn") == "lxfopvefrnhr"
   end
 
   test "strip non-encipherable characters" do
-    assert strip('attack at dawn.') == 'attackatdawn'
+    assert strip("attack at dawn.") == "attackatdawn"
   end
 
   test "deciphering" do
-    assert decipher('lemon','lxfopvefrnhr') == 'attackatdawn'
+    assert decipher("lemon","lxfopvefrnhr") == "attackatdawn"
   end
 end
